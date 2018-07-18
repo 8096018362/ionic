@@ -1,0 +1,36 @@
+
+$RED:#f20505;
+
+page-login {
+    .login-btn{
+        padding-top: 19px;
+    }   
+    .login-img{
+        padding: 3px;
+        text-align: center
+    }
+    ion-content {
+        background: linear-gradient(to bottom,  #8396BD 0%, #6167b9 100%);
+    }
+    .login-lable > .item-md{
+        background-color: transparent
+    }
+    .text-input-md{
+        color: white
+    }
+
+    .text-input-md:active{
+        color: white
+    }
+    .item-input-has-focus .label-md[floating], .input-has-focus .label-md[floating]{
+       color:white;
+    }
+    .login-bottom{
+        color: white
+    }
+    .login-error{
+        color:$RED; 
+        margin-left: 5%;
+        margin-top: 10px;
+    }
+}

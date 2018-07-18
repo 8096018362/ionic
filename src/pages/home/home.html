@@ -1,0 +1,35 @@
+<ion-header >
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+  <ion-segment [(ngModel)]="homeValue">
+    <ion-segment-button value="events">
+      Events
+    </ion-segment-button>
+    <ion-segment-button value="notifications">
+      Notifications
+    </ion-segment-button>
+    <ion-segment-button value="problems">
+      Problems
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+<ion-content>
+
+  <div [ngSwitch]="homeValue">
+    <div *ngSwitchCase="'events'">
+      <page-events></page-events>
+    </div>
+
+    <ion-list *ngSwitchCase="'notifications'">
+      <page-notifications></page-notifications>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'problems'">
+      <page-problems></page-problems>
+    </ion-list>
+  </div>
+</ion-content>

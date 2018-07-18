@@ -1,0 +1,56 @@
+<div class="container">
+
+    <div class="app-header">
+    </div>
+
+    <p *ngIf="!appUserAccessResponse"><em>Loading...</em></p>
+
+    <!--================ For accessibleApps =============-->
+    <div class="access-application-css row" *ngIf="appUserAccessResponse.accessibleApps.length">
+        <div class="appmargin col-sm-3" *ngFor="let application of appUserAccessResponse.accessibleApps">
+            <div class="enabled-text" (click)="selectedApplication(application)" (mouseenter)="applicationData(application)" (mouseleave)="applicationData('')">
+                <p class="app-name" *ngIf="application.applicationName!=hoverData?.applicationName">{{application.applicationName}}</p>
+                <div *ngIf="hoverData&&application.applicationName===hoverData.applicationName&&!applicationClick">
+                    <p class="hoverdescription"> <b>{{hoverData.applicationName}}</b><br>{{hoverData.description}}</p>
+                </div>
+                <div *ngIf="applicationClick&&application.applicationName==applicationClick.applicationName" class="apps-click">
+                    <b>{{applicationClick.applicationName}}</b>
+                    <p>{{applicationClick.applicationName}} is clicked</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================ For empty accessibleApps ============-->
+    <div class="access-application-css row" *ngIf="!appUserAccessResponse.accessibleApps.length">
+        <div class="empty-application col-sm-offset-2 col-sm-9 col-sm-offset-2">
+            <h4 align="center">{{ "Label.NoAccessToQDApplications" | translate }}</h4>
+        </div>
+    </div>
+    <p></p>
+    <div class="otherapplications-lbl">
+        <h4>
+            {{ "Label.OtherApplications" | translate }}: &nbsp;&nbsp;
+            <button (click)="onNavigate()" class="requestaccess-btn">{{ "Button.RequestAccess" | translate }}</button>
+        </h4>
+    </div>
+
+    <p *ngIf="!appUserAccessResponse"><em>Loading...</em></p>
+
+    <!--================ For notAccessibleApps =============-->
+    <div class="no-access-application-css row" *ngIf="appUserAccessResponse.notAccessibleApps.length">
+        <div class="appmargin col-sm-3" *ngFor="let noAccessapplication of appUserAccessResponse.notAccessibleApps" disabled="true">
+            <div class="disabled-text" (mouseenter)="applicationData(noAccessapplication)" (mouseleave)="applicationData('')">
+                <p class="disabled-app-name" *ngIf="noAccessapplication.name!=hoverData?.name">{{noAccessapplication.name}}</p>
+                <div *ngIf="hoverData&&noAccessapplication.name===hoverData.name">
+                    <p class="hoverdescription"> <b>{{hoverData.name}}</b><br>{{hoverData.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================ For empty notAccessibleApps =============-->
+    <div class="access-application-css row" *ngIf="!appUserAccessResponse.notAccessibleApps.length">
+        <div class="empty-application col-sm-offset-2 col-sm-9 col-sm-offset-2">
+            <h4 align="center">USER DOES'NT HAVE ANY NOT ACCESSIBLE APPS</h4>
+        </div>
+    </div>
+</div>

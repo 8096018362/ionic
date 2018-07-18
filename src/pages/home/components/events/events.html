@@ -1,0 +1,69 @@
+<ion-header *ngIf="selectedEvent">
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>Events</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<div *ngIf="!selectedEvent">
+    <div *ngFor="let event of  eventsList">
+        <ion-card>
+            <ion-item class="event-title">
+                <h2>{{event.event_name}}</h2>
+                <p>{{event.event_date}}</p>
+            </ion-item>
+            <img src="./assets/imgs/dummy2.jpg">
+
+            <ion-card-content class="event-info">
+                <p>{{event.event_info}}</p>
+            </ion-card-content>
+            <hr>
+            <ion-row class="event-row">
+                <ion-col col-6>
+                    <div align="center">
+                        <span>{{event.event_place}}</span>
+                    </div>
+                </ion-col>
+
+                <ion-col col-6 (click)="viewEvent(event)">
+                    <div align="center">
+                        <span>ViewMore</span>
+                    </div>
+                </ion-col>
+            </ion-row>
+
+        </ion-card>
+    </div>
+</div>
+
+<!--
+    Selected Event Preview
+-->
+
+<ion-content *ngIf="selectedEvent">
+    <ion-card>
+        <ion-item>
+            <h2>{{selectedEvent.event_name}}</h2>
+        </ion-item>
+
+        <img src="./assets/imgs/dummy2.jpg">
+
+        <ion-card-content>
+            <p>{{selectedEvent.event_info}}</p>
+
+        </ion-card-content>
+    </ion-card>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-6 col-md-4 col-xl-3 *ngFor="let eventPics of selectedEvent.event_pics">
+                <div class="image-container">
+                    <img src="./assets/imgs/dummy2.jpg">
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+</ion-content>

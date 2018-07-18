@@ -1,0 +1,296 @@
+<ion-content padding class="transparent-header" style="background-color:#0D385B">
+    <div class="mainmargin">
+        <!--<ion-row>
+            <ion-col>
+                <p class="inputtextpadding">
+                    <b>Registration</b>
+                </p>
+            </ion-col>
+        </ion-row>-->
+
+
+
+        <ion-row>
+
+            <ion-col>
+                <ion-list class="margins">
+                    <form [formGroup]="registerForm" (ngSubmit)="doRegister(registerForm.value)">
+                        <ion-item class="imargin">
+                            <ion-input type="text" [(ngModel)]="regModel.name" [formControl]="this.name" placeholder="Name"></ion-input>
+                        </ion-item>
+                        <div *ngIf=" this.name.hasError('required') && this.formValidate" class="reg-error">
+                            Name is required
+                        </div>
+                        <div *ngIf=" this.name.hasError('pattern') || this.name.hasError('minlength') || this.name.hasError('maxlength')" class="reg-error">
+                            Please enter 3-20 alphabets only
+                        </div>
+
+
+                        <ion-item class="imargin">
+                            <ion-input type="text" [(ngModel)]="regModel.surname" [formControl]="this.surname" placeholder="Surname"></ion-input>
+                        </ion-item>
+                        <div *ngIf=" this.surname.hasError('required') && this.formValidate" class="reg-error">
+                            Surname is required
+                        </div>
+                        <div *ngIf=" this.surname.hasError('pattern') || this.surname.hasError('minlength') || this.surname.hasError('maxlength')"
+                            class="reg-error">
+                            Please enter 3-20 alphabets only
+                        </div>
+
+                        <ion-item class="imargin">
+                            <ion-input type="text" [(ngModel)]="regModel.gotram" [formControl]="this.gotram" placeholder="Gotram"></ion-input>
+                        </ion-item>
+                        <div *ngIf="this.gotram.hasError('required')  && this.formValidate" class="reg-error">
+                            Gotram is required
+                        </div>
+                        <div *ngIf=" this.gotram.hasError('pattern') || this.gotram.hasError('minlength') || this.gotram.hasError('maxlength')" class="reg-error">
+                            Please enter 3-20 alphabets only
+                        </div>
+
+                        <ion-item class="imargin">
+                            <ion-input type="text" [(ngModel)]="regModel.occupation" [formControl]="this.occupation" placeholder="Occupation"></ion-input>
+                        </ion-item>
+                        <div *ngIf="this.occupation.hasError('required')  && this.formValidate" class="reg-error">
+                            Occupation is required
+                        </div>
+                        <div *ngIf=" this.occupation.hasError('pattern') || this.occupation.hasError('minlength') || this.occupation.hasError('maxlength')"
+                            class="reg-error">
+                            Please enter 3-20 alphabets only
+                        </div>
+
+
+                        <ion-item class="imargin">
+                            <ion-input type="number" [(ngModel)]="regModel.mobile_number" minlength="10" [formControl]="this.mobile_number" placeholder="Mobile Number"></ion-input>
+                        </ion-item>
+                        <div *ngIf=" this.mobile_number.hasError('required')  && this.formValidate" class="reg-error">
+                            Mobile Number is required
+                        </div>
+                        <div *ngIf=" this.mobile_number.hasError('pattern') || this.mobile_number.hasError('minlength') || this.mobile_number.hasError('maxlength')"
+                            class="reg-error">
+                            Enter valid mobile number
+                        </div>
+
+
+                        <ion-item class="imargin">
+                            <ion-input type="password" [(ngModel)]="regModel.password" [formControl]="this.password" placeholder="Password"></ion-input>
+                        </ion-item>
+                        <div *ngIf="this.password.hasError('required')  && this.formValidate" class="reg-error">
+                            Password is required
+                        </div>
+                        <div *ngIf=" this.password.hasError('minlength') || this.password.hasError('maxlength')" class="reg-error">
+                            Please enter 6-10 characters only
+                        </div>
+
+                        <ion-row radio-group [(ngModel)]="regModel.sRef" [ngModelOptions]="{standalone: true}" class="margins radio-btns">
+                            <ion-col>
+                                <ion-radio value="father"></ion-radio>
+                                <ion-label class="reg-radio">Father</ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-radio value="husband"></ion-radio>
+                                <ion-label class="reg-radio">Husband</ion-label>
+                            </ion-col>
+                        </ion-row>
+                        <div *ngIf=" regModel.sRef!='father' && regModel.sRef!='husband'  && this.formValidate" class="reg-error">
+                            RefName Selection is required
+                        </div>
+
+                        <ion-item class="imargin" (click)="diabledMethod()">
+                            <ion-input type="text" [(ngModel)]="regModel.refName" placeholder="Ref Name" [formControl]="this.refName" [disabled]="regModel.sRef!='father' && regModel.sRef!='husband'"></ion-input>
+                        </ion-item>
+                        <div *ngIf="this.refName.hasError('required')  && this.formValidate &&(regModel.sRef=='father' || regModel.sRef=='husband')"
+                            class="reg-error">
+                            RefName is required
+                        </div>
+                        <div *ngIf=" this.refName.hasError('pattern') || this.refName.hasError('minlength') || this.refName.hasError('maxlength')"
+                            class="reg-error">
+                            Please enter 3-20 alphabets only
+                        </div>
+
+
+                        <ion-item class="imargin">
+                            <ion-label>State</ion-label>
+                            <ion-select [(ngModel)]="sState" [formControl]="this.state_id" (ionChange)="setDistrictValues(sState)">
+                                <ion-option *ngFor='let sState of states' [value]='sState'>{{sState.state_name}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+
+                        <ion-item class="imargin" *ngIf="selectedDistricts?.length">
+                            <ion-label>Dist</ion-label>
+                            <ion-select (ionChange)="setCityValues(sDistrict)" [(ngModel)]="sDistrict" [formControl]="this.dist_id">
+                                <ion-option [value]="sDistrict" *ngFor="let sDistrict of selectedDistricts">{{sDistrict.dist_name}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+
+
+                        <ion-item class="imargin" *ngIf="selectedTowns?.length">
+                            <ion-label>Towns</ion-label>
+                            <ion-select [(ngModel)]="sTown" [formControl]="this.town_id">
+                                <ion-option [value]="sTown" *ngFor="let sTown of selectedTowns">{{sTown.town_name}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+
+                        <div *ngIf="!sState && formValidate">
+                            Please Select any one state
+                        </div>
+                        <div *ngIf="!sDistrict && formValidate && selectedDistricts?.length">
+                            Please Select any one dist
+                        </div>
+                        <div *ngIf="!sTown && formValidate && selectedTowns?.length">
+                            Please Select any one town
+                        </div>
+
+                        <ion-item *ngIf="selectedDistricts?.length==0">
+                            Not created dist admins under {{sState.name}} state
+                        </ion-item>
+
+                        <ion-item *ngIf="selectedTowns?.length==0">
+                            Not created town admins under {{sDistrict.name}} dist
+                        </ion-item>
+
+                        <button color="btncolor" ion-button full>signup</button>
+                    </form>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<ion-content padding class="reg">
+    <form [formGroup]="registerForm" (ngSubmit)="doRegister(registerForm.value)">
+        <div class="login-fileds" style="background-color:gainsboro;;padding:19px">
+
+            <ion-item>
+                <ion-input type="text" [(ngModel)]="regModel.surname" [formControl]="this.surname" placeholder="Surname"></ion-input>
+            </ion-item>
+            <div *ngIf=" this.surname.hasError('required') && this.formValidate" class="reg-error">
+                Surname is required
+            </div>
+            <div *ngIf=" this.surname.hasError('pattern') || this.surname.hasError('minlength') || this.surname.hasError('maxlength')"
+                class="reg-error">
+                Please enter 3-20 alphabets only
+            </div>
+
+           
+
+
+
+            <ion-item>
+                <ion-select (ionChange)="setDistrictValues(sState)" [(ngModel)]="sState" [formControl]="this.state_id">
+                    <ion-option [value]="sState" *ngFor="let sState of states">{{sState.state_name}} </ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item *ngIf="selectedDistricts?.length">
+                <ion-select (ionChange)="setCityValues(sDistrict)" [(ngModel)]="sDistrict" [formControl]="this.dist_id">
+                    <ion-option [value]="sDistrict" *ngFor="let sDistrict of selectedDistricts">{{sDistrict.dist_name}}</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item *ngIf="selectedTowns?.length">
+                <ion-select [(ngModel)]="sTown" [formControl]="this.town_id">
+                    <ion-option [value]="sTown" *ngFor="let sTown of selectedTowns">{{sTown.town_name}}</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item *ngIf="selectedDistricts?.length==0">
+                <p style="color:white">Not created dist admins under {{sState.name}} state</p>
+            </ion-item>
+
+            <ion-item *ngIf="selectedTowns?.length==0">
+                <p style="color:white">Not created town admins under {{sDistrict.name}} dist</p>
+            </ion-item>
+        </div>
+        <button color="secondary" ion-button full type="submit">REGISTER</button>
+    </form>
+
+
+
+    <ion-list class="login-lable">
+
+    </ion-list>
+</ion-content>-->
+
+
+
+
+
+
+
+<!--<ion-item>
+            <ion-label color="white" floating>Name</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="white" floating>Surname</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="white" floating>Gotram</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="white" floating>Occupation</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="white" floating>Mobile Number</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="white" floating>Password</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="white" floating>State</ion-label>
+            <ion-select (ionChange)="setDistrictValues(sState)" [(ngModel)]="sState">
+                <ion-option [value]="sState" *ngFor="let sState of states">{{sState.state_name}} </ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="selectedDistricts?.length">
+            <ion-label color="white" floating>District</ion-label>
+            <ion-select (ionChange)="setCityValues(sDistrict)" [(ngModel)]="sDistrict">
+                <ion-option [value]="sDistrict" *ngFor="let sDistrict of selectedDistricts">{{sDistrict.dist_name}}</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="selectedTowns?.length">
+            <ion-label color="white" floating>Towns</ion-label>
+            <ion-select [(ngModel)]="sTown">
+                <ion-option [value]="sTown" *ngFor="let sTown of selectedTowns">{{sTown.town_name}}</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="selectedDistricts?.length==0">
+            <p style="color:white">Not created dist admins under {{sState.name}} state</p>
+        </ion-item>
+
+        <ion-item *ngIf="selectedTowns?.length==0">
+            <p style="color:white">Not created town admins under {{sDistrict.name}} dist</p>
+        </ion-item>-->
+
+<!--<button color="secondary" ion-button full type="submit">REGISTER</button>-->

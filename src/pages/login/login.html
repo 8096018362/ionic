@@ -1,0 +1,50 @@
+<ion-content padding class="login">
+  <div class="login-img">
+    <!--<img src="../assets/imgs/dummy1.png">-->
+    <!--<img src="../assets/imgs/login-logo.png">-->
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="doLogin(loginForm.value)">
+
+    <ion-list class="login-lable">
+      <ion-item>
+        <ion-label color="white" floating>Username</ion-label>
+        <ion-input type="text" formControlName="username"></ion-input>
+      </ion-item>
+
+      <div *ngIf="loginForm.controls.username.hasError('required') && this.formValidate" class="login-error">
+        Username is required
+      </div>
+      <div *ngIf="loginForm.controls.username.hasError('pattern')||loginForm.controls.username.hasError('minlength')||loginForm.controls.username.hasError('maxlength')"
+        class="login-error">
+        Please enter valid mobile number only
+      </div>
+
+      <ion-item>
+        <ion-label color="white" floating>Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div *ngIf="loginForm.controls.password.hasError('required') && this.formValidate" class="login-error">
+      Password is required
+    </div>
+    <div *ngIf="loginForm.controls.password.hasError('pattern')||loginForm.controls.password.hasError('minlength')||loginForm.controls.password.hasError('maxlength')"
+      class="login-error">
+      Please enter valid password 6-10 characters
+    </div>
+
+    <ion-list class="login-btn">
+      <button ion-button color="secondary" full>Sign in</button>
+      <div>
+        <ion-grid class="login-bottom">
+          <ion-row>
+            <ion-col col-6 align="left" (click)="newUser()">New User ?</ion-col>
+            <ion-col col-6 align="right">Forgot Password?</ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-list>
+
+  </form>
+
+</ion-content>
